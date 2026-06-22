@@ -25,7 +25,7 @@
     </main>
 
     {{-- pie de pagina --}}
-   {{--@include('componentes.footer') --}} 
+   @include('components.footer') 
 </body>
 
 </html>
