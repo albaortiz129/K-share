@@ -15,7 +15,12 @@ class ListingController extends Controller
      */
     public function index()
     {
-        return view('listings.index');
+        $listings = Listing::with(['photocard', 'user'])
+            ->where('is_sold', false)
+            ->latest()
+            ->get();
+
+        return view('listings.index', compact('listings'));
     }
 
     /**
@@ -58,7 +63,7 @@ class ListingController extends Controller
         // Cuando exista autenticacion, este bloque se cambiara por auth()->id().
         $userId = auth()->id();
 
-        if (! $userId) {
+        if (!$userId) {
             $userId = User::firstOrCreate(
                 ['email' => 'demo@kshare.test'],
                 [
@@ -84,11 +89,17 @@ class ListingController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Muestra el detalle de un anuncio concreto.
+     *
+     * Laravel recibe el id de la URL /listings/{listing} y busca
+     * automaticamente el Listing correspondiente.
      */
     public function show(Listing $listing)
     {
-        //
+        // Carga la photocard y el usuario para poder mostrarlos en la vista.
+        $listing->load(['photocard', 'user']);
+
+        return view('listings.show', compact('listing'));
     }
 
     /**

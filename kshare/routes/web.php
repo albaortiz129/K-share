@@ -19,6 +19,9 @@ Route::get('/listings/create', [ListingController::class, 'create'])->name('list
 // POST /listings guarda el anuncio en la base de datos.
 Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
 
+// /listings/{listing} muestra el detalle de un anuncio concreto.
+Route::get('/listings/{listing}', [ListingController::class, 'show'])->name('listings.show');
+
 // Rutas de tradeos.
 // De momento carga una vista estatica.
 Route::view('/trades', 'trades.index')->name('trades.index');

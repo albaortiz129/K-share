@@ -44,8 +44,8 @@
 
                     {{-- Enlace a la pagina completa de anuncios. --}}
                     <a href="{{ route('listings.index') }}"
-                        style="color: #8f4659; font-size: 14px; font-weight: 700; text-decoration: none;">
-                        Ver todo
+                        style="display: inline-flex; align-items: center; gap: 8px; color: #8f4659; font-size: 14px; font-weight: 800; text-decoration: none; background-color: #fffafb; border: 1px solid #f1d9e1; border-radius: 999px; padding: 10px 16px; box-shadow: 0 10px 22px rgba(143, 70, 89, 0.08);">
+                        Ver todo &rarr;
                     </a>
                 </div>
 
@@ -63,7 +63,7 @@
                     </div>
                 @else
                     {{-- Grid responsive de cards. Cada card representa un anuncio. --}}
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 28px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fill, 145px); justify-content: start; gap: 20px;">
                         @foreach ($latestListings as $listing)
                             @php
                                 // Guardamos la photocard relacionada
@@ -79,35 +79,46 @@
                             @endphp
 
                             <article
-                                style="background-color: #ffffff; border-radius: 26px; padding: 14px; box-shadow: 0 18px 35px rgba(143, 70, 89, 0.10);">
+                                style="background-color: #ffffff; border: 1px solid #f6dfe6; border-radius: 18px; padding: 8px; box-shadow: 0 10px 22px rgba(143, 70, 89, 0.08);">
                                 {{-- Imagen principal de la photocard. --}}
-                                <div
-                                    style="position: relative; overflow: hidden; border-radius: 18px; background-color: #f8edf1; aspect-ratio: 4 / 5;">
+                                <a href="{{ route('listings.show', $listing) }}"
+                                    style="position: relative; overflow: hidden; display: block; border-radius: 14px; background: linear-gradient(145deg, #ffe4ec, #f8edf1); aspect-ratio: 4 / 5; text-decoration: none;">
                                     <img src="{{ $imageSrc }}" alt="{{ $card?->idol_name ?? 'Photocard' }}"
                                         style="width: 100%; height: 100%; object-fit: cover; display: block;">
 
+                                    @if ($card?->rarity)
+                                        <span
+                                            style="position: absolute; left: 7px; bottom: 7px; border-radius: 999px; background-color: rgba(143, 70, 89, 0.92); color: #ffffff; padding: 3px 7px; font-size: 8px; font-weight: 800; text-transform: uppercase; letter-spacing: 0;">
+                                            {{ $card->rarity }}
+                                        </span>
+                                    @endif
+
                                     {{-- Boton de favorito. --}}
                                     <button type="button" aria-label="Guardar anuncio"
-                                        style="position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border: 0; border-radius: 999px; background-color: rgba(255, 255, 255, 0.88); color: #8f4659; font-size: 21px; line-height: 34px; box-shadow: 0 8px 16px rgba(143, 70, 89, 0.14);">
+                                        style="position: absolute; top: 7px; right: 7px; width: 26px; height: 26px; border: 0; border-radius: 999px; background-color: rgba(255, 255, 255, 0.88); color: #8f4659; font-size: 16px; line-height: 26px; box-shadow: 0 6px 12px rgba(143, 70, 89, 0.12);">
                                         &hearts;
                                     </button>
-                                </div>
+                                </a>
 
                                 {{-- Informacion del anuncio. --}}
-                                <div style="padding: 12px 2px 0;">
+                                <div style="padding: 8px 2px 0;">
                                     <h3
-                                        style="font-size: 15px; line-height: 1.2; font-weight: 800; color: #1f171a; margin: 0 0 3px;">
-                                        {{ $card?->idol_name ?? 'Photocard' }}
+                                        style="font-size: 13px; line-height: 1.2; font-weight: 800; color: #1f171a; margin: 0 0 3px;">
+                                        <a href="{{ route('listings.show', $listing) }}"
+                                            style="color: inherit; text-decoration: none;">
+                                            {{ $card?->idol_name ?? 'Photocard' }}
+                                        </a>
                                     </h3>
-                                    <p style="font-size: 13px; line-height: 1.3; color: #3f3034; margin: 0 0 14px;">
-                                        {{ $card?->album_era ?? $card?->group_name ?? 'K-Share' }}
+                                    <p style="font-size: 11px; line-height: 1.3; color: #5c4046; margin: 0 0 8px;">
+                                        {{ $card?->group_name ?? 'K-Share' }} &middot; {{ $card?->album_era ?? 'Era sin indicar' }}
                                     </p>
 
                                     {{-- Precio de la carta. --}}
                                     <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
-                                        <strong style="font-size: 16px; color: #8f4659;">
-                                            {{ number_format($listing->price, 2) }}
+                                        <strong style="font-size: 13px; color: #8f4659;">
+                                            {{ number_format($listing->price, 2) }} {{ $listing->currency }}
                                         </strong>
+                                        <span style="font-size: 10px; color: #8f7b82;">Nuevo</span>
                                     </div>
                                 </div>
                             </article>
