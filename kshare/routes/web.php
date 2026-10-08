@@ -1,7 +1,27 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListingController;
+use Illuminate\Support\Facades\Route;
+
+// Pagina principal de la web.
+// Usa HomeController porque el inicio no solo muestra HTML:
+// tambien necesita recibir los ultimos anuncios publicados.
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// Rutas de anuncios / marketplace.
+// /listings muestra la pagina de anuncios.
+Route::get('/listings', [ListingController::class, 'index'])->name('listings.index');
+
+// /listings/create muestra el formulario para crear un anuncio.
+Route::get('/listings/create', [ListingController::class, 'create'])->name('listings.create');
+
+// POST /listings guarda el anuncio en la base de datos.
+Route::post('/listings', [ListingController::class, 'store'])->name('listings.store');
+
+// Rutas de tradeos.
+// De momento carga una vista estatica.
+Route::view('/trades', 'trades.index')->name('trades.index');
 
 // Paginas informativas que se abren desde el footer.
 // Cada ruta carga directamente una vista Blade, sin controlador.
@@ -9,19 +29,6 @@ use App\Http\Controllers\HomeController;
 // resources/views/support/faq.blade.php
 // resources/views/support/contacto.blade.php
 // resources/views/support/nosotros.blade.php
-Route::view('/faq','support.faq')->name('faq');
-Route::view('/contacto','support.contacto')->name('contacto');
-Route::view('/nosotros','support.nosotros')->name('nosotros');
-
-// Pagina principal de la web.
-// Usa HomeController porque el inicio no solo muestra HTML:
-// tambien necesita recibir los ultimos anuncios publicados.
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// Pagina donde se mostraran los intercambios entre usuarios.
-// De momento carga una vista estatica.
-Route::view('/trades', 'trades.index')->name('trades.index');
-
-// Pagina donde se crearan o listaran anuncios del marketplace.
-// De momento carga una vista estatica.
-Route::view('/listings','listings.index')->name('listings.index');
+Route::view('/faq', 'support.faq')->name('faq');
+Route::view('/contacto', 'support.contacto')->name('contacto');
+Route::view('/nosotros', 'support.nosotros')->name('nosotros');

@@ -24,8 +24,8 @@
                         Empezar a intercambiar
                     </a>
 
-                    {{-- Lleva a la pagina donde se crearan o veran anuncios. --}}
-                    <a href="{{ route('listings.index') }}"
+                    {{-- Lleva al formulario para crear un anuncio. --}}
+                    <a href="{{ route('listings.create') }}"
                         style="display: inline-block; background-color: #ECE8E9; color: #8f4659; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-family: sans-serif; font-size: 15px; font-weight: 600; border: 2px solid #ffb6c8;">
                         Crea tu propio anuncio
                     </a>
@@ -56,7 +56,7 @@
                         <h3 style="font-size: 22px; font-weight: 800; margin: 0 0 8px;">Todavia no hay anuncios</h3>
                         <p style="font-size: 15px; color: #5c4046; margin: 0 0 22px;">Cuando alguien publique una photocard,
                             aparecera aqui.</p>
-                        <a href="{{ route('listings.index') }}"
+                        <a href="{{ route('listings.create') }}"
                             style="display: inline-block; background-color: #8f4659; color: #ffffff; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-size: 15px; font-weight: 700;">
                             Crear anuncio
                         </a>
