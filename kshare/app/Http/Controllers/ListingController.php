@@ -62,6 +62,7 @@ class ListingController extends Controller
             $userId = User::firstOrCreate(
                 ['email' => 'demo@kshare.test'],
                 [
+                    'username' => 'usuario_temporal',
                     'name' => 'Usuario temporal',
                     'password' => Hash::make('password'),
                 ]
